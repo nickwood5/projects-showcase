@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>IMU Broadcast Listener</title>
+</head>
+<body>
+  <h1>IMU Broadcast Listener</h1>
+  
+  <label for="imuIdInput">Enter IMU ID:</label>
+  <input type="text" id="imuIdInput" placeholder="e.g., my_imu_id" />
+  <button id="connectBtn">Connect</button>
+  
+  <h3>Messages from Server:</h3>
+  <pre id="output"></pre>
+  
+  <script>
+    let socket = null;
+    
+    document.getElementById("connectBtn").addEventListener("click", function() {
+      const imuId = document.getElementById("imuIdInput").value.trim();
+      if (!imuId) {
+        alert("Please enter an IMU ID.");
+        return;
+      }
+
+      // Construct the WebSocket URL (adjust host/port as needed)
+      const wsUrl = `ws://localhost:8000/api/ws/imu/${imuId}/broadcast/`;
+      console.log("Connecting to", wsUrl);
+
+      // Close any existing connection before creating a new one
+      if (socket) {
+        socket.close();
+      }
+
+      socket = new WebSocket(wsUrl);
+
+      // Handle successful connection
+      socket.onopen = function(event) {
+        console.log("Connected to:", wsUrl);
+        appendOutput(`Connected to: ${wsUrl}`);
+      };
+
+      // Handle messages from the server
+      socket.onmessage = function(event) {
+        console.log("Message from server:", event.data);
+        appendOutput(event.data);
+      };
+
+      // Handle connection close
+      socket.onclose = function(event) {
+        console.log("Disconnected from server");
+        appendOutput("Disconnected from server");
+      };
+
+      // Handle errors
+      socket.onerror = function(error) {
+        console.error("WebSocket error:", error);
+        appendOutput("WebSocket error. Check the console for details.");
+      };
+    });
+
+    /**
+     * Helper function to append messages to the output <pre> element
+     */
+    function appendOutput(message) {
+      const outputElem = document.getElementById("output");
+      outputElem.textContent += message + "\n";
+    }
+  </script>
+</body>
+</html>
