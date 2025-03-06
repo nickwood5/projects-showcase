@@ -25,7 +25,7 @@
       }
 
       // Construct the WebSocket URL (adjust host/port as needed)
-      const wsUrl = `ws://localhost:8000/api/ws/imu/${imuId}/broadcast/`;
+      const wsUrl = `wss://personal-site-oi5a.onrender.com/api/ws/imu/${imuId}/broadcast/`;
       console.log("Connecting to", wsUrl);
 
       // Close any existing connection before creating a new one
