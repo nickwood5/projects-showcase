@@ -78,6 +78,19 @@
   
   <script>
     // ----------------------
+    // Check if there's an 'id' query param and auto-connect if present
+    // ----------------------
+    document.addEventListener("DOMContentLoaded", function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const paramId = urlParams.get('id');
+      if (paramId) {
+        const imuIdInput = document.getElementById("imuIdInput");
+        imuIdInput.value = paramId;
+        document.getElementById("connectBtn").click();  // Auto-connect
+      }
+    });
+
+    // ----------------------
     // Three.js Game Variables
     // ----------------------
     let scene, camera, renderer, player;
