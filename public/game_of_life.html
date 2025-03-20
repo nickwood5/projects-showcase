@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100&family=Lato:wght@900&family=Montserrat:wght@800&display=swap" rel="stylesheet">
+    
+    <title>Game of Life</title>
+
+    <style>
+
+        .heading {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2vh;
+            color: #ffe6ee;
+        }
+        
+        .breakpoint {
+            height: 2vh;
+        }
+        
+        .button-two {
+            font-weight: 300;
+            color: #f2e6ff;
+            font-size: 1.5vh;
+            font-family: 'Montserrat', sans-serif;
+            border-radius: 50px;
+            background-color:#575757;
+            text-align: center;
+            border: none;
+            height: 5vh;
+            width: 12vh;
+            transition: all 0.2s;
+        }
+
+        .button-two span {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        transition: 0.2s;
+        }
+
+        .button-two span:after {
+        content: '»';
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        right: -20px;
+        transition: 0.2s;
+        }
+
+        .button-two:hover span {
+            padding-right: 25px;
+        }
+
+        .button-two:hover span:after {
+            opacity: 1;
+            right: 0;
+        }
+
+        body {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            background-color: black;
+        }
+
+        :root {
+            --numRows: 50;
+            --numCols: 50;
+        }
+        
+        #game-board {
+            background-color: #222222;
+            width: 80vmin;
+            height: 80vmin;
+            margin-top: 10vmin;
+            margin-bottom: 10vmin;
+            margin-left: auto;
+            margin-right: 5vmin;
+            display: grid;
+            grid-template-rows: repeat(var(--numRows), 1fr);
+            grid-template-columns: repeat(var(--numCols), 1fr);
+        }
+
+        #sidebar {
+            border-radius: 25px;
+            background-color: #222222;
+            width: 20vmin;
+            height: 80vmin;
+            margin-top: 10vmin;
+            margin-bottom: 10vmin;
+            
+            margin-right: auto;
+
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .blueprintCell {
+            background-color: hsl(0, 0%, 100%);
+            border: solid;
+            border-color: #303030;
+            border-width: 0.5px;
+        }
+
+        .blueprintEmpty {
+            border: solid;
+            border-color: #303030;
+            border-width: 0.1px;
+        }
+
+        .activeCell {
+            background-color: hsl(0, 0%, 100%);
+        }
+        
+        .tile {
+            background-color: hsla(0, 0%, 100%, 0);
+        }
+
+        button {
+            border: none;
+            overflow: hidden;
+            outline: none;
+            background-color: transparent;
+            background-repeat: no-repeat;
+        }
+
+        nav ul {
+            height:30vmin; 
+            width:20vmin;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            overflow:hidden; 
+            overflow-y:scroll;
+        }
+
+        li {
+            font-family: 'Montserrat', sans-serif;
+            color: rgb(255, 255, 255);
+            padding-left: 10px;
+            font-size: 1.5vh;
+        }
+
+        input {
+            width: 18vmin;
+            height: 2vmin;
+            border-radius: 50px;
+        }
+
+        .errormessage {
+            color: rgb(241, 25, 25);
+            font-size: 15px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+    </style>
+
+<body style="background-color:#151515">
+    <script type="text/javascript" src="life.js" defer type="module"></script>
+
+    <div id="game-board"> </div>
+    <div id="sidebar">
+        <div class="text-center">
+            <div class="breakpoint"></div>
+            <div class="breakpoint"></div>
+            <button class="button-two" role="button" onclick="controlSimulation()" id="controlsim"><span>Start</span></button>
+            <div class="breakpoint"></div>
+            <button class="button-two" role="button" onclick="resetSimulation(true)" id="restart"><span>Random</span></button>
+            <div class="breakpoint"></div>
+            <div class="breakpoint"></div>
+            <div class="heading">Load Design</div>
+            <div class="breakpoint"></div>
+        </div>
+
+        <nav>
+            <ul id="list"></ul>
+        </nav>
+        
+        <div class="breakpoint"></div>
+        <div class="breakpoint"></div>
+        
+        <div class="text-center">
+            <div class="heading">Save Design</div>
+            <div class="breakpoint"></div>
+            <input type="text" id="blueprintName">
+            <div class="breakpoint"></div>
+            <button class="button-two" onclick="saveBlueprint()" id="savebutton"><span>Save</span></button> 
+            <p class="errormessage" id = "errorMessage"></p>
+        </div>
+    </div>
+</body>
+</html>
