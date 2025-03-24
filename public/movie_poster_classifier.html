@@ -1,0 +1,20 @@
+<head>
+<link rel="stylesheet" href="mystyle.css">
+<script type="text/javascript" src="drop.js" defer type="module"></script>
+</head>
+<title>Movie Poster Classifier</title>
+<body>
+
+<br>
+<h1 style="text-align:center">Movie Poster Classifier</h1>
+<p style="text-align:center">A PyTorch image recognition model trained on 12k+ movie poster images from 2000-2016.</p>
+<div id="drop-area">
+    <form class="my-form">
+      <p>Upload multiple files with the file dialog or by dragging and dropping images onto the dashed area.</p>
+      <input type="file" id="fileElem" multiple accept="image/*" onchange="handleFiles(this.files)">
+      <label class="button" for="fileElem">Select files</label>
+    </form>
+    <div id="gallery" /></div>
+</div>
+
+</body>
